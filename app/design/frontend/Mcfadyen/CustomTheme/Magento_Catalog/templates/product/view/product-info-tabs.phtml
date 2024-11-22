@@ -1,0 +1,20 @@
+<div class="product-info-tabs">
+    <ul class="tabs">
+        <li><a href="#tab-description">Description</a></li>
+        <li><a href="#tab-reviews">Reviews</a></li>
+    </ul>
+    <div class="tab-content">
+        <div id="tab-description" class="tab-panel">
+            <?= $block->getChildHtml('description') ?>
+        </div>
+        <div id="tab-reviews" class="tab-panel">
+            <?= $block->getChildHtml('reviews') ?>
+        </div>
+    </div>
+</div>
+
+<style>
+.tab-panel {
+    display: none;
+}
+</style>

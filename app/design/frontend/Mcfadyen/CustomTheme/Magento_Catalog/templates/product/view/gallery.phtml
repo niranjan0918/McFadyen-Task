@@ -1,0 +1,17 @@
+<?php
+/** @var \Magento\Catalog\Block\Product\View\Gallery $block */
+$product = $block->getProduct();
+$images = $block->getGalleryImages();
+?>
+<div class="gallery"  id="resizeMessage">
+    <div class="gallery-images">
+        <?php if ($images): ?>
+            <?php foreach ($images as $image): ?>
+                <div class="product-image mySlides gallery-image">
+                    <img src="<?= $image->getUrl() ?>" alt="<?= $image->getLabel() ?>" />
+                </div>
+            <?php endforeach; ?>
+        <?php endif; ?>
+    </div>
+    <div class="dots-container"></div>
+</div>

@@ -1,0 +1,219 @@
+<?php
+/** @var \Magento\Catalog\Block\Product\View\Gallery $block */
+$product = $block->getProduct();
+$images = $block->getGalleryImages();
+?>
+
+<style>
+     .action.towishlist:before {
+        position: absolute;
+        font-family: 'icons-blank-theme';
+        content: '\e600';
+        left: 40px;
+        width: 40px;
+        height: 40px;
+        font-size: 20px;
+        border: 1px solid red;
+    } 
+    
+    
+    /* .custom-main {
+        display: grid;
+        grid-template-columns: 25% 46% 25%;
+        grid-column-gap: 2%;
+        justify-content: space-between;
+        box-sizing: border-box;
+    }
+    .page-layout-1column .product.media {
+        width: 100%;
+    }
+    .page-layout-1column .product-info-main {
+        width: 100%;
+    }
+    .sticky .product.info.detailed,.sticky .product-info-main,.sticky .product.attribute.overview {
+        position: -webkit-sticky;
+        position: sticky;
+        top: 0;
+    }
+    .pos-sticky .towishlist {
+        position: -webkit-sticky;
+        position: sticky;
+        top: 0;
+    }
+    .product-info-main .box-tocart {
+        width: 100%;
+    }
+    .product-info-main .box-tocart .actions {
+        display: block;
+        padding-top: 0px;
+    }
+    .product-info-main .box-tocart .actions .tocart {
+        width: 100%;
+        border-radius: 100px;
+        background-color: #000;
+        font-size: 14px;
+        text-transform: uppercase;
+        padding: 12px 0px;
+    }
+    .product.data.items>.item.title>.switch {
+        background: #fff;
+        border: none;
+        padding: 0px 0px;
+        color: #767676;
+        margin-right: 10px;
+        font-weight: 500;
+    }
+    .product.data.items>.item.title.active>.switch {
+        font-weight: bold;
+    }
+    .product.data.items>.item.content {
+        border-top: none;
+        padding: 0px;
+        
+    }
+    .swatch-attribute.size .swatch-option.text {
+            width: 78px;
+            height: 30px;
+            border-radius: 30px;
+            background: #fff;
+            border: 1px solid #E5E5E5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .swatch-attribute.size .swatch-option.text.selected {
+            outline: 1px solid #000;
+        }
+        .box-tocart .fieldset {
+            margin: 0 0 0px;
+        }
+    @media screen and (max-width: 767px) {
+        .gallery {
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+            max-width: 600px;
+            margin: auto;
+        }
+        .gallery-images {
+            display: flex;
+            transition: transform 0.3s ease-in-out;
+        }
+        .gallery-image {
+            min-width: 100%;
+            box-sizing: border-box;
+        }
+        .gallery-image img {
+            width: 100%;
+            display: block;
+        }
+        .custom-main {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .custom-container1 {
+            order: 2;
+        }
+        .custom-container2 {
+            order: 0;
+        }
+        .custom-container3 {
+            order: 1;
+        }
+        
+    } */
+</style>
+<div class="gallery"  id="resizeMessage">
+    <div class="gallery-images">
+        <?php if ($images): ?>
+            <?php foreach ($images as $image): ?>
+                <div class="product-image mySlides gallery-image">
+                    <img src="<?= $image->getUrl() ?>" alt="<?= $image->getLabel() ?>" />
+                </div>
+            <?php endforeach; ?>
+        <?php endif; ?>
+    </div>
+    <div class="dots-container">
+        <!-- Dots will be generated dynamically -->
+    </div>
+</div>
+
+<script type="text/javascript">
+    function checkWindowSize() {
+        const message = document.getElementById('resizeMessage');
+        if (window.innerWidth < 767) {
+            const galleryImages = document.querySelector('.gallery-images');
+            const galleryImageCount = document.querySelectorAll('.gallery-image').length;
+            const dotsContainer = document.querySelector('.dots-container');
+            let currentIndex = 0;
+            let startX = 0;
+            let endX = 0;
+
+            function showImage(index) {
+                galleryImages.style.transform = `translateX(-${index * 100}%)`;
+                updateDots();
+            }
+
+            function createDots() {
+                for (let i = 0; i < galleryImageCount; i++) {
+                    const dot = document.createElement('div');
+                    dot.classList.add('dot');
+                    dot.addEventListener('click', () => {
+                        currentIndex = i;
+                        showImage(currentIndex);
+                    });
+                    dotsContainer.appendChild(dot);
+                }
+            }
+
+            function updateDots() {
+                const dots = document.querySelectorAll('.dot');
+                dots.forEach((dot, index) => {
+                    if (index === currentIndex) {
+                        dot.classList.add('active');
+                    } else {
+                        dot.classList.remove('active');
+                    }
+                });
+            }
+
+            galleryImages.addEventListener('touchstart', (e) => {
+                startX = e.touches[0].clientX;
+            });
+
+            galleryImages.addEventListener('touchmove', (e) => {
+                endX = e.touches[0].clientX;
+            });
+
+            galleryImages.addEventListener('touchend', () => {
+                if (startX > endX + 50 && currentIndex < galleryImageCount - 1) {
+                    currentIndex++;
+                } else if (startX < endX - 50 && currentIndex > 0) {
+                    currentIndex--;
+                }
+                showImage(currentIndex);
+            });
+            createDots();
+            showImage(currentIndex);
+        } else {
+            document.addEventListener('scroll', () => {
+            const divP = document.querySelector('.custom-main');
+            const divA = document.querySelector('.custom-container1');
+            const divB = document.querySelector('.custom-container2');
+            const divC = document.querySelector('.custom-container3');
+                const divBRect = divB.getBoundingClientRect();
+                if (divBRect.top <= 0 && divBRect.bottom > window.innerHeight) {
+                    divP.classList.add('pos-sticky');
+                    divA.classList.add('sticky');
+                    divC.classList.add('sticky'); 
+                } else {
+                    divA.classList.remove('sticky');
+                    divC.classList.remove('sticky');
+                    divP.classList.remove('pos-sticky');
+                }
+            });
+        }
+    }
+    checkWindowSize();
+    window.addEventListener('resize', checkWindowSize);
+</script>

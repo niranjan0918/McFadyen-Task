@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd" layout="1column">
+    <head>
+        <script src="js/custom.js"/>
+    </head>
+    <body>
+       
+        <referenceContainer name="content">
+            <container name="main.item.container" htmlTag="div" htmlClass="main-item-container" before="-">
+                <container name="list.container1" htmlTag="div" htmlClass="list-container1"/>
+                <container name="list.container2" htmlTag="div" htmlClass="list-container2" after="list.container1"/>
+                <container name="list.container3" htmlTag="div" htmlClass="list-container3" after="list.container2"/>
+                <container name="list.container4" htmlTag="div" htmlClass="list-container4" after="list.container3"/>
+            </container>
+            <container name="editor_note_sec" htmlTag="div" htmlClass="editor_note_sec" after="-"/>
+    </referenceContainer>
+    <move element="product.info.details" destination="list.container1"/>
+    <move element="product.info.media" destination="list.container2"/>
+    <move element="product.info.main" destination="list.container3"/>
+    <referenceBlock name="view.addto.compare" remove="true"/>
+    <move element="view.addto.wishlist" destination="product.info.media"/>
+    <referenceBlock name="product.info.review" remove="true" />
+    <referenceBlock name="product.info.sku" remove="true" />
+    <move element="product.info.overview" destination="editor_note_sec" />
+        
+    </body>
+</page>
